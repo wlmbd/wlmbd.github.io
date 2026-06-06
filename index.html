@@ -50,6 +50,8 @@
         .marker-archaeological { background-color: #ef4444; } /* Red */
         .marker-fort { background-color: #64748b; } /* Slate */
         .marker-default { background-color: #3b82f6; } /* Blue */
+        .marker-museum { background-color: #06b6d4; } /* Cyan */
+        .marker-tomb { background-color: #14b8a6; } /* Teal */
 
         /* Custom scrollbar for better aesthetics */
         ::-webkit-scrollbar {
@@ -72,16 +74,15 @@
     <header class="bg-white shadow-sm py-4 px-6 z-20 relative">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center">
             <div class="flex items-center mb-4 sm:mb-0">
-                <!-- Using a placeholder logo -->
                 <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-xl mr-3">W</div>
                 <div>
-                    <h1 class="text-2xl font-bold text-slate-900 leading-tight">Wiki Loves Monuments</h1>
-                    <p class="text-sm text-slate-500 font-medium">Bangladesh 2026</p>
+                    <h1 class="text-2xl font-bold text-slate-900 leading-tight">উইকি লাভস মনুমেন্টস</h1>
+                    <p class="text-sm text-slate-500 font-medium">বাংলাদেশ ২০২৬</p>
                 </div>
             </div>
             <div class="flex gap-3">
-                <button onclick="zoomToFullMap()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-md text-sm font-medium transition-colors">Reset View</button>
-                <a href="#" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm font-medium transition-colors shadow-sm">Upload Photo</a>
+                <button onclick="zoomToFullMap()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-md text-sm font-medium transition-colors">রিসেট ভিউ</button>
+                <a href="#" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm font-medium transition-colors shadow-sm">ছবি আপলোড করুন</a>
             </div>
         </div>
     </header>
@@ -91,30 +92,42 @@
         <!-- Sidebar for information and filtering -->
         <aside class="w-full lg:w-1/3 xl:w-1/4 bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden flex flex-col max-h-[500px] lg:max-h-full">
             <div class="p-5 border-b border-slate-100 bg-slate-50">
-                <h2 class="text-lg font-semibold text-slate-800 mb-2">Explore Monuments</h2>
-                <p class="text-sm text-slate-600">Discover historical sites across Bangladesh to photograph for the 2026 competition.</p>
+                <h2 class="text-lg font-semibold text-slate-800 mb-2">স্থাপনা অন্বেষণ করুন</h2>
+                <p class="text-sm text-slate-600">২০২৬ সালের প্রতিযোগিতার জন্য ছবি তুলতে বাংলাদেশের ঐতিহাসিক স্থানগুলো খুঁজুন।</p>
             </div>
             
             <div class="p-4 border-b border-slate-100 space-y-3 bg-white z-10 relative shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)]">
                 <div>
-                    <label for="division-filter" class="block text-sm font-medium text-slate-700 mb-1">Division</label>
+                    <label for="division-filter" class="block text-sm font-medium text-slate-700 mb-1">বিভাগ</label>
                     <select id="division-filter" class="w-full border-slate-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm border bg-white">
-                        <option value="all">All Divisions</option>
-                        <option value="Dhaka">Dhaka</option>
-                        <option value="Chattogram">Chattogram</option>
-                        <option value="Rajshahi">Rajshahi</option>
-                        <option value="Khulna">Khulna</option>
-                        <option value="Sylhet">Sylhet</option>
-                        <option value="Barishal">Barishal</option>
-                        <option value="Rangpur">Rangpur</option>
-                        <option value="Mymensingh">Mymensingh</option>
+                        <option value="all">সকল বিভাগ</option>
+                        <option value="ঢাকা">ঢাকা</option>
+                        <option value="চট্টগ্রাম">চট্টগ্রাম</option>
+                        <option value="রাজশাহী">রাজশাহী</option>
+                        <option value="খুলনা">খুলনা</option>
+                        <option value="সিলেট">সিলেট</option>
+                        <option value="বরিশাল">বরিশাল</option>
+                        <option value="রংপুর">রংপুর</option>
+                        <option value="ময়মনসিংহ">ময়মনসিংহ</option>
                     </select>
                 </div>
                 <div>
-                    <label for="district-filter" class="block text-sm font-medium text-slate-700 mb-1">District</label>
+                    <label for="district-filter" class="block text-sm font-medium text-slate-700 mb-1">জেলা</label>
                     <select id="district-filter" class="w-full border-slate-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm border bg-white disabled:bg-slate-100 disabled:text-slate-400" disabled>
-                        <option value="all">Select a Division first</option>
+                        <option value="all">প্রথমে একটি বিভাগ নির্বাচন করুন</option>
                     </select>
+                </div>
+                <div class="flex gap-2 items-end">
+                    <div class="flex-grow">
+                        <label for="type-filter" class="block text-sm font-medium text-slate-700 mb-1">ধরন (ক্যাটাগরি)</label>
+                        <select id="type-filter" class="w-full border-slate-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm border bg-white">
+                            <option value="all">সকল ধরন</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Total Count Indicator -->
+                <div id="result-count" class="mt-2 text-sm font-bold text-blue-700 bg-blue-50 py-2 px-3 rounded-md border border-blue-200 text-center shadow-inner">
+                    মোট স্থাপনা: ০
                 </div>
             </div>
 
@@ -125,7 +138,7 @@
             
             <div class="p-4 bg-blue-50 border-t border-blue-100 mt-auto">
                 <p class="text-xs text-blue-800 text-center">
-                    Data shown is for demonstration purposes. Ensure you follow all local guidelines when photographing.
+                    প্রদর্শিত তথ্য শুধুমাত্র ডেমো হিসেবে ব্যবহৃত। ছবি তোলার সময় স্থানীয় নিয়ম মেনে চলুন।
                 </p>
             </div>
         </aside>
@@ -136,46 +149,174 @@
             <div id="loading-overlay" class="absolute inset-0 bg-white/80 z-20 flex items-center justify-center rounded-lg">
                 <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
             </div>
-            <div id="map" class="border border-slate-200"></div>
+            <div id="map" class="border border-slate-200 rounded-lg"></div>
         </div>
     </main>
 
     <script>
-        // Sample data for monuments in Bangladesh
-        // In a real app, this would likely come from Wikidata or a WLM specific API
+        // Sample data for monuments in Bangladesh (Translated to Bengali & Khulna added)
         const monumentsData = [
-            { id: 1, name: "Lalbagh Fort", division: "Dhaka", district: "Dhaka", lat: 23.7189, lng: 90.3881, type: "Fort", wikiId: "WLM-BD-001", image: "https://placehold.co/400x300/e2e8f0/475569?text=Lalbagh+Fort" },
-            { id: 2, name: "Ahsan Manzil", division: "Dhaka", district: "Dhaka", lat: 23.7086, lng: 90.4061, type: "Palace", wikiId: "WLM-BD-002", image: "https://placehold.co/400x300/e2e8f0/475569?text=Ahsan+Manzil" },
-            { id: 3, name: "Somapura Mahavihara", division: "Rajshahi", district: "Naogaon", lat: 25.0286, lng: 88.9819, type: "Archaeological Site", wikiId: "WLM-BD-003", image: "https://placehold.co/400x300/e2e8f0/475569?text=Somapura+Mahavihara" },
-            { id: 4, name: "Sixty Dome Mosque", division: "Khulna", district: "Bagerhat", lat: 22.6744, lng: 89.7419, type: "Mosque", wikiId: "WLM-BD-004", image: "https://placehold.co/400x300/e2e8f0/475569?text=Sixty+Dome+Mosque" },
-            { id: 5, name: "Kantajew Temple", division: "Rangpur", district: "Dinajpur", lat: 25.7583, lng: 88.6658, type: "Temple", wikiId: "WLM-BD-005", image: "https://placehold.co/400x300/e2e8f0/475569?text=Kantajew+Temple" },
-            { id: 6, name: "Mahasthangarh", division: "Rajshahi", district: "Bogra", lat: 24.9608, lng: 89.3444, type: "Archaeological Site", wikiId: "WLM-BD-006", image: "https://placehold.co/400x300/e2e8f0/475569?text=Mahasthangarh" },
-            { id: 7, name: "Mainamati", division: "Chattogram", district: "Cumilla", lat: 23.4319, lng: 91.1378, type: "Archaeological Site", wikiId: "WLM-BD-007", image: "https://placehold.co/400x300/e2e8f0/475569?text=Mainamati" },
-            { id: 8, name: "Baitul Mukarram", division: "Dhaka", district: "Dhaka", lat: 23.7289, lng: 90.4125, type: "Mosque", wikiId: "WLM-BD-008", image: "https://placehold.co/400x300/e2e8f0/475569?text=Baitul+Mukarram" },
-            { id: 9, name: "National Martyrs' Memorial", division: "Dhaka", district: "Savar", lat: 23.9108, lng: 90.2547, type: "Monument", wikiId: "WLM-BD-009", image: "https://placehold.co/400x300/e2e8f0/475569?text=Martyrs+Memorial" },
-            { id: 10, name: "Puthia Temple Complex", division: "Rajshahi", district: "Rajshahi", lat: 24.3631, lng: 88.8683, type: "Temple Complex", wikiId: "WLM-BD-010", image: "https://placehold.co/400x300/e2e8f0/475569?text=Puthia+Temples" },
-            { id: 11, name: "Tajhat Palace", division: "Rangpur", district: "Rangpur", lat: 25.7283, lng: 89.2661, type: "Palace", wikiId: "WLM-BD-011", image: "https://placehold.co/400x300/e2e8f0/475569?text=Tajhat+Palace" },
-            { id: 12, name: "Ali Amjad's Clock", division: "Sylhet", district: "Sylhet", lat: 24.8906, lng: 91.8703, type: "Clock Tower", wikiId: "WLM-BD-012", image: "https://placehold.co/400x300/e2e8f0/475569?text=Ali+Amjad+Clock" },
-            { id: 13, name: "Guthia Mosque", division: "Barishal", district: "Barishal", lat: 22.7931, lng: 90.2356, type: "Mosque", wikiId: "WLM-BD-013", image: "https://placehold.co/400x300/e2e8f0/475569?text=Guthia+Mosque" },
-            { id: 14, name: "Shashi Lodge", division: "Mymensingh", district: "Mymensingh", lat: 24.7644, lng: 90.4042, type: "Palace", wikiId: "WLM-BD-014", image: "https://placehold.co/400x300/e2e8f0/475569?text=Shashi+Lodge" }
+            { id: 1, name: "লালবাগ কেল্লা", division: "ঢাকা", district: "ঢাকা", lat: 23.7189, lng: 90.3881, type: "দুর্গ", wikiId: "WLM-BD-001", image: "https://placehold.co/400x300/e2e8f0/475569?text=Lalbagh+Fort" },
+            { id: 2, name: "আহসান মঞ্জিল", division: "ঢাকা", district: "ঢাকা", lat: 23.7086, lng: 90.4061, type: "প্রাসাদ", wikiId: "WLM-BD-002", image: "https://placehold.co/400x300/e2e8f0/475569?text=Ahsan+Manzil" },
+            { id: 3, name: "সোমপুর মহাবিহার", division: "রাজশাহী", district: "নওগাঁ", lat: 25.0286, lng: 88.9819, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "WLM-BD-003", image: "https://placehold.co/400x300/e2e8f0/475569?text=Somapura+Mahavihara" },
+            { id: 4, name: "ষাট গম্বুজ মসজিদ", division: "খুলনা", district: "বাগেরহাট", lat: 22.6744, lng: 89.7419, type: "মসজিদ", wikiId: "BD-D-58-22", image: "https://placehold.co/400x300/e2e8f0/475569?text=Sixty+Dome+Mosque" },
+            { id: 5, name: "কান্তজীর মন্দির", division: "রংপুর", district: "দিনাজপুর", lat: 25.7583, lng: 88.6658, type: "মন্দির", wikiId: "WLM-BD-005", image: "https://placehold.co/400x300/e2e8f0/475569?text=Kantajew+Temple" },
+            { id: 6, name: "মহাস্থানগড়", division: "রাজশাহী", district: "বগুড়া", lat: 24.9608, lng: 89.3444, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "WLM-BD-006", image: "https://placehold.co/400x300/e2e8f0/475569?text=Mahasthangarh" },
+            { id: 7, name: "ময়নামতি", division: "চট্টগ্রাম", district: "কুমিল্লা", lat: 23.4319, lng: 91.1378, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "WLM-BD-007", image: "https://placehold.co/400x300/e2e8f0/475569?text=Mainamati" },
+            { id: 8, name: "বায়তুল মোকাররম", division: "ঢাকা", district: "ঢাকা", lat: 23.7289, lng: 90.4125, type: "মসজিদ", wikiId: "WLM-BD-008", image: "https://placehold.co/400x300/e2e8f0/475569?text=Baitul+Mukarram" },
+            
+            // ময়মনসিংহ বিভাগের ডেটা
+            { id: 14, name: "শশী লজ", division: "ময়মনসিংহ", district: "ময়মনসিংহ", lat: 24.7644, lng: 90.4042, type: "প্রাসাদ", wikiId: "BD-H-34-1", image: "https://placehold.co/400x300/e2e8f0/475569?text=Shashi+Lodge" },
+            { id: 15, name: "ময়মনসিংহ জাদুঘর", division: "ময়মনসিংহ", district: "ময়মনসিংহ", lat: 24.7635, lng: 90.4055, type: "জাদুঘর", wikiId: "BD-H-34-2", image: "https://placehold.co/400x300/e2e8f0/475569?text=Mymensingh+Museum" },
+            { id: 16, name: "আট-আনী জমিদার বাড়ি", division: "ময়মনসিংহ", district: "ময়মনসিংহ", lat: 24.7550, lng: 90.2650, type: "প্রাসাদ", wikiId: "BD-H-34-3", image: "https://placehold.co/400x300/e2e8f0/475569?text=Aat+Ani+Zamindar+Bari" },
+            { id: 17, name: "আনন্দময়ী যুগল কালী ও শিব মন্দির", division: "ময়মনসিংহ", district: "ময়মনসিংহ", lat: 24.7570, lng: 90.2640, type: "মন্দির", wikiId: "BD-H-34-4", image: "https://placehold.co/400x300/e2e8f0/475569?text=Shiva+Temple" },
+            { id: 18, name: "তিন শিব মন্দির", division: "ময়মনসিংহ", district: "ময়মনসিংহ", lat: 24.7600, lng: 90.4000, type: "মন্দির", wikiId: "BD-H-34-5", image: "https://placehold.co/400x300/e2e8f0/475569?text=Three+Siva+Temple" },
+            { id: 19, name: "হর রামেশ্বর মন্দির", division: "ময়মনসিংহ", district: "ময়মনসিংহ", lat: 24.7610, lng: 90.4010, type: "মন্দির", wikiId: "BD-H-34-6", image: "https://placehold.co/400x300/e2e8f0/475569?text=Har+Rameshwar" },
+            { id: 20, name: "পাথরের শিব মন্দির", division: "ময়মনসিংহ", district: "ময়মনসিংহ", lat: 24.7620, lng: 90.4020, type: "মন্দির", wikiId: "BD-H-34-7", image: "https://placehold.co/400x300/e2e8f0/475569?text=Stone+Siva+Temple" },
+            { id: 21, name: "শশীকান্ত প্রাসাদ", division: "ময়মনসিংহ", district: "ময়মনসিংহ", lat: 24.7630, lng: 90.4030, type: "প্রাসাদ", wikiId: "BD-H-34-8", image: "https://placehold.co/400x300/e2e8f0/475569?text=Shashikanta+Palace" },
+            { id: 22, name: "বুরুজ ঢিবি", division: "ময়মনসিংহ", district: "নেত্রকোনা", lat: 24.8500, lng: 90.7200, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-H-41-9", image: "https://placehold.co/400x300/e2e8f0/475569?text=Buruj+Mound" },
+            { id: 23, name: "ডেঙ্গু মিয়ার সমাধি", division: "ময়মনসিংহ", district: "নেত্রকোনা", lat: 24.8600, lng: 90.7300, type: "মাজার/সমাধি", wikiId: "BD-H-41-10", image: "https://placehold.co/400x300/e2e8f0/475569?text=Dengu+Mia+Tomb" },
+            { id: 24, name: "নিয়ামত বিবির মাজার", division: "ময়মনসিংহ", district: "নেত্রকোনা", lat: 24.8700, lng: 90.7400, type: "মাজার/সমাধি", wikiId: "BD-H-41-11", image: "https://placehold.co/400x300/e2e8f0/475569?text=Niamati+Bibi+Dargah" },
+            { id: 25, name: "ছাদবিহীন পুরাতন ইমারত (রোয়াইলবাড়ি)", division: "ময়মনসিংহ", district: "নেত্রকোনা", lat: 24.8800, lng: 90.7500, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-H-41-12", image: "https://placehold.co/400x300/e2e8f0/475569?text=Roayl+Bari" },
+            { id: 26, name: "বড় দেউড়ী বার দুয়ারী ঢিবি", division: "ময়মনসিংহ", district: "নেত্রকোনা", lat: 24.8900, lng: 90.7600, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-H-41-13", image: "https://placehold.co/400x300/e2e8f0/475569?text=Boro+Deuri+Mound" },
+            { id: 27, name: "কোটবাড়ী দুর্গ", division: "ময়মনসিংহ", district: "নেত্রকোনা", lat: 24.9000, lng: 90.7700, type: "দুর্গ", wikiId: "BD-H-41-14", image: "https://placehold.co/400x300/e2e8f0/475569?text=Kotbari+Fort" },
+            { id: 28, name: "ঘাঘড়া খান বাড়ি জামে মসজিদ", division: "ময়মনসিংহ", district: "শেরপুর", lat: 25.0100, lng: 90.0100, type: "মসজিদ", wikiId: "BD-H-57-15", image: "https://placehold.co/400x300/e2e8f0/475569?text=Ghagra+Khan+Mosque" },
+            { id: 29, name: "নয়আনী জমিদার বাড়ি", division: "ময়মনসিংহ", district: "শেরপুর", lat: 25.0200, lng: 90.0200, type: "প্রাসাদ", wikiId: "BD-H-57-16", image: "https://placehold.co/400x300/e2e8f0/475569?text=Nayani+Zamindar" },
+            { id: 30, name: "নয়আনী জমিদার বাড়ির রংমহল", division: "ময়মনসিংহ", district: "শেরপুর", lat: 25.0210, lng: 90.0210, type: "প্রাসাদ", wikiId: "BD-H-57-17", image: "https://placehold.co/400x300/e2e8f0/475569?text=Rang+Mahal" },
+            { id: 31, name: "গৌরীপুর লজ", division: "ময়মনসিংহ", district: "ময়মনসিংহ", lat: 24.7500, lng: 90.5700, type: "প্রাসাদ", wikiId: "BD-H-34-18", image: "https://placehold.co/400x300/e2e8f0/475569?text=Gouripur+Lodge" },
+            { id: 32, name: "আলেকজান্ডার ক্যাসল", division: "ময়মনসিংহ", district: "ময়মনসিংহ", lat: 24.7650, lng: 90.4050, type: "প্রাসাদ", wikiId: "BD-H-34-19", image: "https://placehold.co/400x300/e2e8f0/475569?text=Alexandar+Castle" },
+            { id: 33, name: "শিল্পাচার্য জয়নুল আবেদিন সংগ্রহশালা", division: "ময়মনসিংহ", district: "ময়মনসিংহ", lat: 24.7660, lng: 90.4060, type: "জাদুঘর", wikiId: "BD-H-34-20", image: "https://placehold.co/400x300/e2e8f0/475569?text=Zainul+Abedin+Museum" },
+            { id: 34, name: "বীরাঙ্গনা সখিনার মাজার", division: "ময়মনসিংহ", district: "ময়মনসিংহ", lat: 24.6500, lng: 90.6000, type: "মাজার/সমাধি", wikiId: "BD-H-34-21", image: "https://placehold.co/400x300/e2e8f0/475569?text=Birangana+Sakhina" },
+            { id: 35, name: "রসপাল জামে মসজিদ", division: "ময়মনসিংহ", district: "জামালপুর", lat: 24.9200, lng: 89.9500, type: "মসজিদ", wikiId: "BD-H-21-22", image: "https://placehold.co/400x300/e2e8f0/475569?text=Raspal+Jami+Mosque" },
+            { id: 36, name: "মাইসাহেবা জামে মসজিদ", division: "ময়মনসিংহ", district: "শেরপুর", lat: 25.0300, lng: 90.0300, type: "মসজিদ", wikiId: "BD-H-57-23", image: "https://placehold.co/400x300/e2e8f0/475569?text=Mai+Saheba+Mosque" },
+            
+            // খুলনা বিভাগের নতুন ডেটা
+            { id: 101, name: "মসজিদকুঁড় মসজিদ", division: "খুলনা", district: "খুলনা", lat: 22.8100, lng: 89.5600, type: "মসজিদ", wikiId: "BD-D-27-1", image: "https://placehold.co/400x300/e2e8f0/475569?text=Masjid+Kur" },
+            { id: 102, name: "দক্ষিণডিহি রবীন্দ্র কমপ্লেক্স", division: "খুলনা", district: "খুলনা", lat: 22.8200, lng: 89.5700, type: "ভবন/কমপ্লেক্স", wikiId: "BD-D-27-2", image: "https://placehold.co/400x300/e2e8f0/475569?text=Dakshindihi" },
+            { id: 103, name: "তিন গম্বুজ মসজিদ", division: "খুলনা", district: "খুলনা", lat: 22.8300, lng: 89.5800, type: "মসজিদ", wikiId: "BD-D-27-3", image: "https://placehold.co/400x300/e2e8f0/475569?text=Three+Dome+Mosque" },
+            { id: 104, name: "ধুপখোলা মসজিদ", division: "খুলনা", district: "খুলনা", lat: 22.8400, lng: 89.5500, type: "মসজিদ", wikiId: "BD-D-27-4", image: "https://placehold.co/400x300/e2e8f0/475569?text=Dhopa+Khola" },
+            { id: 105, name: "স্যার প্রফুল্ল চন্দ্র রায়ের বাড়ি", division: "খুলনা", district: "খুলনা", lat: 22.8500, lng: 89.5400, type: "প্রাসাদ/বাড়ি", wikiId: "BD-D-27-5", image: "https://placehold.co/400x300/e2e8f0/475569?text=Prafulla+Chandra+Roy" },
+            { id: 106, name: "রবীন্দ্রনাথ ঠাকুরের বসতভিটা, পিঠাভোগ", division: "খুলনা", district: "খুলনা", lat: 22.8600, lng: 89.5300, type: "প্রাসাদ/বাড়ি", wikiId: "BD-D-27-6", image: "https://placehold.co/400x300/e2e8f0/475569?text=Rabindranath+House" },
+            { id: 107, name: "প্রবাজপুর শাহী মসজিদ", division: "খুলনা", district: "সাতক্ষীরা", lat: 22.3100, lng: 89.1100, type: "মসজিদ", wikiId: "BD-D-58-7", image: "https://placehold.co/400x300/e2e8f0/475569?text=Probajpur+Mosque" },
+            { id: 108, name: "তেতুলিয়া জামে মসজিদ", division: "খুলনা", district: "সাতক্ষীরা", lat: 22.3200, lng: 89.1200, type: "মসজিদ", wikiId: "BD-D-58-8", image: "https://placehold.co/400x300/e2e8f0/475569?text=Tetulia+Mosque" },
+            { id: 109, name: "ইশ্বরীপুর হাম্মামখানা", division: "খুলনা", district: "সাতক্ষীরা", lat: 22.3300, lng: 89.1300, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-D-58-9", image: "https://placehold.co/400x300/e2e8f0/475569?text=Iswaripur+Hammam" },
+            { id: 110, name: "জাহাজ ঘাটা হাম্মামখানা ও তৎসংলগ্ন ধ্বংসাবশেষ", division: "খুলনা", district: "সাতক্ষীরা", lat: 22.3400, lng: 89.1400, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-D-58-10", image: "https://placehold.co/400x300/e2e8f0/475569?text=Jahajghata" },
+            { id: 111, name: "ঝুঁড়িঝাড়া ঢিবি", division: "খুলনা", district: "সাতক্ষীরা", lat: 22.3500, lng: 89.1500, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-D-58-11", image: "https://placehold.co/400x300/e2e8f0/475569?text=Jhurijara+Mound" },
+            { id: 112, name: "দরবার স্তম্ভ", division: "খুলনা", district: "সাতক্ষীরা", lat: 22.3600, lng: 89.1600, type: "স্মৃতিস্তম্ভ", wikiId: "BD-D-58-12", image: "https://placehold.co/400x300/e2e8f0/475569?text=Darbar+Stambha" },
+            { id: 113, name: "গোবিন্দ দেবের মন্দির ঢিবি", division: "খুলনা", district: "সাতক্ষীরা", lat: 22.3700, lng: 89.1700, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-D-58-13", image: "https://placehold.co/400x300/e2e8f0/475569?text=Gobinda+Deva+Mound" },
+            { id: 114, name: "যীশুর র্গীজা (শ্যামনগর)", division: "খুলনা", district: "সাতক্ষীরা", lat: 22.3800, lng: 89.1800, type: "গির্জা", wikiId: "BD-D-58-14", image: "https://placehold.co/400x300/e2e8f0/475569?text=Church+of+Jesus" },
+            { id: 115, name: "যশোরেশ্বরী মন্দির", division: "খুলনা", district: "সাতক্ষীরা", lat: 22.3900, lng: 89.1900, type: "মন্দির", wikiId: "BD-D-58-15", image: "https://placehold.co/400x300/e2e8f0/475569?text=Joshoreshari+Temple" },
+            { id: 116, name: "শ্যাম সুন্দর মন্দির", division: "খুলনা", district: "সাতক্ষীরা", lat: 22.4000, lng: 89.2000, type: "মন্দির", wikiId: "BD-D-58-16", image: "https://placehold.co/400x300/e2e8f0/475569?text=Sam+Sundar+Temple" },
+            { id: 117, name: "কোঠাবাড়ির থান", division: "খুলনা", district: "সাতক্ষীরা", lat: 22.4100, lng: 89.2100, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-D-58-17", image: "https://placehold.co/400x300/e2e8f0/475569?text=Kothabarir+Than" },
+            { id: 118, name: "ছয়ঘরিয়া জোড়াশিব মন্দির", division: "খুলনা", district: "সাতক্ষীরা", lat: 22.4200, lng: 89.2200, type: "মন্দির", wikiId: "BD-D-58-18", image: "https://placehold.co/400x300/e2e8f0/475569?text=Chaygharia+Siva" },
+            { id: 119, name: "অন্নপূর্ণা মন্দির", division: "খুলনা", district: "সাতক্ষীরা", lat: 22.4300, lng: 89.2300, type: "মন্দির", wikiId: "BD-D-58-19", image: "https://placehold.co/400x300/e2e8f0/475569?text=Annapurna+Temple" },
+            { id: 120, name: "দ্বাদশ শিব মন্দির", division: "খুলনা", district: "সাতক্ষীরা", lat: 22.4400, lng: 89.2400, type: "মন্দির", wikiId: "BD-D-58-20", image: "https://placehold.co/400x300/e2e8f0/475569?text=Twelve+Siva+Temple" },
+            { id: 121, name: "জমিদার বাড়ি জামে মসজিদ", division: "খুলনা", district: "সাতক্ষীরা", lat: 22.4500, lng: 89.2500, type: "মসজিদ", wikiId: "BD-D-58-21", image: "https://placehold.co/400x300/e2e8f0/475569?text=Jamindar+Bari+Mosque" },
+            { id: 123, name: "নয়গম্বুজ মসজিদ", division: "খুলনা", district: "বাগেরহাট", lat: 22.6800, lng: 89.7500, type: "মসজিদ", wikiId: "BD-D-05-23", image: "https://placehold.co/400x300/e2e8f0/475569?text=Nine+Dome+Mosque" },
+            { id: 124, name: "রণবিজয়পুর মসজিদ", division: "খুলনা", district: "বাগেরহাট", lat: 22.6900, lng: 89.7600, type: "মসজিদ", wikiId: "BD-D-05-24", image: "https://placehold.co/400x300/e2e8f0/475569?text=Ronvijoypur+Mosque" },
+            { id: 125, name: "সিংগার মসজিদ", division: "খুলনা", district: "বাগেরহাট", lat: 22.7000, lng: 89.7700, type: "মসজিদ", wikiId: "BD-D-05-25", image: "https://placehold.co/400x300/e2e8f0/475569?text=Singar+Mosque" },
+            { id: 126, name: "বিবি বেগনী মসজিদ", division: "খুলনা", district: "বাগেরহাট", lat: 22.7100, lng: 89.7800, type: "মসজিদ", wikiId: "BD-D-05-26", image: "https://placehold.co/400x300/e2e8f0/475569?text=Bibi+Begni+Mosque" },
+            { id: 127, name: "চুনাখোলা মসজিদ", division: "খুলনা", district: "বাগেরহাট", lat: 22.7200, lng: 89.7900, type: "মসজিদ", wikiId: "BD-D-05-27", image: "https://placehold.co/400x300/e2e8f0/475569?text=Chuna+Khola+Mosque" },
+            { id: 128, name: "রেজা খোদা মসজিদ", division: "খুলনা", district: "বাগেরহাট", lat: 22.7300, lng: 89.8000, type: "মসজিদ", wikiId: "BD-D-05-28", image: "https://placehold.co/400x300/e2e8f0/475569?text=Reja+Khoda+Mosque" },
+            { id: 129, name: "উলুঘ খান জাহানের মসজিদ ও বসতবাড়ি", division: "খুলনা", district: "বাগেরহাট", lat: 22.7400, lng: 89.8100, type: "প্রাসাদ/বাড়ি", wikiId: "BD-D-05-29", image: "https://placehold.co/400x300/e2e8f0/475569?text=Khan+Jahan+Residence" },
+            { id: 130, name: "এক গম্বুজ জামে মসজিদ, বাগেরহাট", division: "খুলনা", district: "বাগেরহাট", lat: 22.7500, lng: 89.8200, type: "মসজিদ", wikiId: "BD-D-05-30", image: "https://placehold.co/400x300/e2e8f0/475569?text=One+Dome+Mosque" },
+            { id: 131, name: "খান জাহানের নির্মিত প্রাচীন রাস্তা", division: "খুলনা", district: "বাগেরহাট", lat: 22.7600, lng: 89.8300, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-D-05-31", image: "https://placehold.co/400x300/e2e8f0/475569?text=Ancient+Road" },
+            { id: 132, name: "খান জাহানের সমাধি", division: "খুলনা", district: "বাগেরহাট", lat: 22.7700, lng: 89.8400, type: "মাজার/সমাধি", wikiId: "BD-D-05-32", image: "https://placehold.co/400x300/e2e8f0/475569?text=Khan+Jahan+Tomb" },
+            { id: 133, name: "পীর আলীর সমাধি", division: "খুলনা", district: "বাগেরহাট", lat: 22.7800, lng: 89.8500, type: "মাজার/সমাধি", wikiId: "BD-D-05-33", image: "https://placehold.co/400x300/e2e8f0/475569?text=Peer+Ali+Tomb" },
+            { id: 134, name: "সাবেকডাঙ্গা মনুমেন্ট", division: "খুলনা", district: "বাগেরহাট", lat: 22.7900, lng: 89.8600, type: "স্মৃতিস্তম্ভ", wikiId: "BD-D-05-34", image: "https://placehold.co/400x300/e2e8f0/475569?text=Shabek+Danga" },
+            { id: 135, name: "কোদলা মঠ", division: "খুলনা", district: "বাগেরহাট", lat: 22.8000, lng: 89.8700, type: "মন্দির", wikiId: "BD-D-05-35", image: "https://placehold.co/400x300/e2e8f0/475569?text=Kodla+Math" },
+            { id: 136, name: "দশ গম্বুজ মসজিদ", division: "খুলনা", district: "বাগেরহাট", lat: 22.8100, lng: 89.8800, type: "মসজিদ", wikiId: "BD-D-05-36", image: "https://placehold.co/400x300/e2e8f0/475569?text=Ten+Dome+Mosque" },
+            { id: 137, name: "আদিনা ঢিবি", division: "খুলনা", district: "বাগেরহাট", lat: 22.8200, lng: 89.8900, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-D-05-37", image: "https://placehold.co/400x300/e2e8f0/475569?text=Adina+Mound" },
+            { id: 138, name: "মাইকেল মধুসূদন দত্তের বাড়ি", division: "খুলনা", district: "যশোর", lat: 23.1600, lng: 89.2000, type: "প্রাসাদ/বাড়ি", wikiId: "BD-D-22-38", image: "https://placehold.co/400x300/e2e8f0/475569?text=Michael+Madhusudan" },
+            { id: 139, name: "কবি মাইকেল মধুসূদন দত্তের স্মৃতি ভাস্কর্য", division: "খুলনা", district: "যশোর", lat: 23.1700, lng: 89.2100, type: "স্মৃতিস্তম্ভ", wikiId: "BD-D-22-39", image: "https://placehold.co/400x300/e2e8f0/475569?text=Madhusudan+Sculpture" },
+            { id: 140, name: "ভরত ভায়না", division: "খুলনা", district: "যশোর", lat: 23.1800, lng: 89.2200, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-D-22-40", image: "https://placehold.co/400x300/e2e8f0/475569?text=Borot+Bhayna" },
+            { id: 141, name: "মির্জানগর নবাব বাড়ির হাম্মামখানা", division: "খুলনা", district: "যশোর", lat: 23.1900, lng: 89.2300, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-D-22-41", image: "https://placehold.co/400x300/e2e8f0/475569?text=Mirzanagar+Hammam" },
+            { id: 142, name: "শেখপুর জামে মসজিদ", division: "খুলনা", district: "যশোর", lat: 23.2000, lng: 89.2400, type: "মসজিদ", wikiId: "BD-D-22-42", image: "https://placehold.co/400x300/e2e8f0/475569?text=Sheikpur+Mosque" },
+            { id: 143, name: "হাজী মোহাম্মদ মহসিন ইমামবাড়া", division: "খুলনা", district: "যশোর", lat: 23.2100, lng: 89.2500, type: "মসজিদ/ইমামবাড়া", wikiId: "BD-D-22-43", image: "https://placehold.co/400x300/e2e8f0/475569?text=Mohsin+Imambara" },
+            { id: 144, name: "চাচঁড়া শিব মন্দির", division: "খুলনা", district: "যশোর", lat: 23.2200, lng: 89.2600, type: "মন্দির", wikiId: "BD-D-22-44", image: "https://placehold.co/400x300/e2e8f0/475569?text=Chanchra+Siva" },
+            { id: 145, name: "দমদম পীরের ঢিবি", division: "খুলনা", district: "যশোর", lat: 23.2300, lng: 89.2700, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-D-22-45", image: "https://placehold.co/400x300/e2e8f0/475569?text=Dam+Dam+Peer" },
+            { id: 146, name: "কায়েম কোনা মসজিদ", division: "খুলনা", district: "যশোর", lat: 23.2400, lng: 89.2800, type: "মসজিদ", wikiId: "BD-D-22-46", image: "https://placehold.co/400x300/e2e8f0/475569?text=Kayem+Kona" },
+            { id: 147, name: "এগারো শিব মন্দির", division: "খুলনা", district: "যশোর", lat: 23.2500, lng: 89.2900, type: "মন্দির", wikiId: "BD-D-22-47", image: "https://placehold.co/400x300/e2e8f0/475569?text=Eleven+Siva" },
+            { id: 148, name: "খান জাহান আলী জামে মসজিদ", division: "খুলনা", district: "যশোর", lat: 23.2600, lng: 89.3000, type: "মসজিদ", wikiId: "BD-D-22-48", image: "https://placehold.co/400x300/e2e8f0/475569?text=Khan+Jahan+Ali" },
+            { id: 149, name: "শাহী মসজিদ, শেখপুরা", division: "খুলনা", district: "যশোর", lat: 23.2700, lng: 89.3100, type: "মসজিদ", wikiId: "BD-D-22-49", image: "https://placehold.co/400x300/e2e8f0/475569?text=Shahi+Mosque" },
+            { id: 150, name: "নীহাররঞ্জন গুপ্তের বাড়ি", division: "খুলনা", district: "নড়াইল", lat: 23.1600, lng: 89.5000, type: "প্রাসাদ/বাড়ি", wikiId: "BD-D-43-50", image: "https://placehold.co/400x300/e2e8f0/475569?text=Nihar+Ranjan" },
+            { id: 151, name: "জোড় বাংলা মন্দির, নড়াইল", division: "খুলনা", district: "নড়াইল", lat: 23.1700, lng: 89.5100, type: "মন্দির", wikiId: "BD-D-43-51", image: "https://placehold.co/400x300/e2e8f0/475569?text=Jor+Bangla+Temple" },
+            { id: 152, name: "গোরার মসজিদ", division: "খুলনা", district: "ঝিনাইদহ", lat: 23.5400, lng: 89.1700, type: "মসজিদ", wikiId: "BD-D-23-52", image: "https://placehold.co/400x300/e2e8f0/475569?text=Gorar+Mosque" },
+            { id: 153, name: "মুকুট রাজার বাড়ি", division: "খুলনা", district: "ঝিনাইদহ", lat: 23.5500, lng: 89.1800, type: "প্রাসাদ/বাড়ি", wikiId: "BD-D-23-53", image: "https://placehold.co/400x300/e2e8f0/475569?text=Mukut+Raja" },
+            { id: 154, name: "পাঠাগার ঢিবি", division: "খুলনা", district: "ঝিনাইদহ", lat: 23.5600, lng: 89.1900, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-D-23-54", image: "https://placehold.co/400x300/e2e8f0/475569?text=Pathagar+Mound" },
+            { id: 155, name: "জোড় বাংলা ঢিবি", division: "খুলনা", district: "ঝিনাইদহ", lat: 23.5700, lng: 89.2000, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-D-23-55", image: "https://placehold.co/400x300/e2e8f0/475569?text=Jor+Bangla+Mound" },
+            { id: 156, name: "খড়ের দীঘি ঢিবি", division: "খুলনা", district: "ঝিনাইদহ", lat: 23.5800, lng: 89.2100, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-D-23-56", image: "https://placehold.co/400x300/e2e8f0/475569?text=Kharer+Dighi" },
+            { id: 157, name: "মনোহর দিঘি মসজিদ", division: "খুলনা", district: "ঝিনাইদহ", lat: 23.5900, lng: 89.2200, type: "মসজিদ", wikiId: "BD-D-23-57", image: "https://placehold.co/400x300/e2e8f0/475569?text=Monohar+Dighi" },
+            { id: 158, name: "বাদে ডিহি ঢিবি", division: "খুলনা", district: "ঝিনাইদহ", lat: 23.6000, lng: 89.2300, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-D-23-58", image: "https://placehold.co/400x300/e2e8f0/475569?text=Badedihi+Mound" },
+            { id: 159, name: "নামাজগাঁও", division: "খুলনা", district: "ঝিনাইদহ", lat: 23.6100, lng: 89.2400, type: "মসজিদ", wikiId: "BD-D-23-59", image: "https://placehold.co/400x300/e2e8f0/475569?text=Namaj+Gaon" },
+            { id: 160, name: "দম দম ঢিবি", division: "খুলনা", district: "ঝিনাইদহ", lat: 23.6200, lng: 89.2500, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-D-23-60", image: "https://placehold.co/400x300/e2e8f0/475569?text=Dam+Dam+Mound" },
+            { id: 161, name: "ঘোপের ঢিবি", division: "খুলনা", district: "ঝিনাইদহ", lat: 23.6300, lng: 89.2600, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-D-23-61", image: "https://placehold.co/400x300/e2e8f0/475569?text=Ghoper+Mound" },
+            { id: 162, name: "সিংদহা আউলিয়া মসজিদ", division: "খুলনা", district: "ঝিনাইদহ", lat: 23.6400, lng: 89.2700, type: "মসজিদ", wikiId: "BD-D-23-62", image: "https://placehold.co/400x300/e2e8f0/475569?text=Shingdaha+Aulia" },
+            { id: 163, name: "সাতগাছিয়া গায়েবানা মসজিদ", division: "খুলনা", district: "ঝিনাইদহ", lat: 23.6500, lng: 89.2800, type: "মসজিদ", wikiId: "BD-D-23-63", image: "https://placehold.co/400x300/e2e8f0/475569?text=Satgachia+Mosque" },
+            { id: 164, name: "জাহাজঘাট", division: "খুলনা", district: "ঝিনাইদহ", lat: 23.6600, lng: 89.2900, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-D-23-64", image: "https://placehold.co/400x300/e2e8f0/475569?text=Jahaj+Ghata" },
+            { id: 165, name: "গলাকাটা দিঘি ঢিবি মসজিদ", division: "খুলনা", district: "ঝিনাইদহ", lat: 23.6700, lng: 89.3000, type: "মসজিদ", wikiId: "BD-D-23-65", image: "https://placehold.co/400x300/e2e8f0/475569?text=Galakata+Dighi" },
+            { id: 166, name: "পীরপুকুর ঢিবি", division: "খুলনা", district: "ঝিনাইদহ", lat: 23.6800, lng: 89.3100, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-D-23-66", image: "https://placehold.co/400x300/e2e8f0/475569?text=Pirpukur+Dhibi" },
+            { id: 167, name: "নুনগোলা ঢিবি", division: "খুলনা", district: "ঝিনাইদহ", lat: 23.6900, lng: 89.3200, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-D-23-67", image: "https://placehold.co/400x300/e2e8f0/475569?text=Nungola+Mound" },
+            { id: 168, name: "শুকুর মল্লিক ঢিবি", division: "খুলনা", district: "ঝিনাইদহ", lat: 23.7000, lng: 89.3300, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-D-23-68", image: "https://placehold.co/400x300/e2e8f0/475569?text=Shukur+Mallik" },
+            { id: 169, name: "দিক নগর ঢিবি", division: "খুলনা", district: "ঝিনাইদহ", lat: 23.7100, lng: 89.3400, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-D-23-69", image: "https://placehold.co/400x300/e2e8f0/475569?text=Diknagar+Mound" },
+            { id: 170, name: "খালিশপুর নীলকুঠি ভবন", division: "খুলনা", district: "ঝিনাইদহ", lat: 23.7200, lng: 89.3500, type: "প্রাসাদ/ভবন", wikiId: "BD-D-23-70", image: "https://placehold.co/400x300/e2e8f0/475569?text=Khalishpur+Nilkuthi" },
+            { id: 171, name: "পঞ্চরত্ন মন্দির", division: "খুলনা", district: "ঝিনাইদহ", lat: 23.7300, lng: 89.3600, type: "মন্দির", wikiId: "BD-D-23-71", image: "https://placehold.co/400x300/e2e8f0/475569?text=Pancharatna+Mandir" },
+            { id: 172, name: "রাজা সীতারাম রায়ের প্রাসাদ-দুর্গ", division: "খুলনা", district: "মাগুরা", lat: 23.4800, lng: 89.4200, type: "প্রাসাদ/দুর্গ", wikiId: "BD-D-37-72", image: "https://placehold.co/400x300/e2e8f0/475569?text=Sita+Ram+Roy" },
+            { id: 173, name: "দশ ভূজা মন্দির", division: "খুলনা", district: "মাগুরা", lat: 23.4900, lng: 89.4300, type: "মন্দির", wikiId: "BD-D-37-73", image: "https://placehold.co/400x300/e2e8f0/475569?text=Dasa+Bhuja" },
+            { id: 174, name: "কৃষ্ণ মন্দির", division: "খুলনা", district: "মাগুরা", lat: 23.5000, lng: 89.4400, type: "মন্দির", wikiId: "BD-D-37-74", image: "https://placehold.co/400x300/e2e8f0/475569?text=Krishna+Temple" },
+            { id: 175, name: "দোল মঞ্চ", division: "খুলনা", district: "মাগুরা", lat: 23.5100, lng: 89.4500, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-D-37-75", image: "https://placehold.co/400x300/e2e8f0/475569?text=Dol+Mancha" },
+            { id: 176, name: "সীতারাম রাজার কাচারী বাড়ি ও পুকুর", division: "খুলনা", district: "মাগুরা", lat: 23.5200, lng: 89.4600, type: "প্রাসাদ/বাড়ি", wikiId: "BD-D-37-76", image: "https://placehold.co/400x300/e2e8f0/475569?text=Kachari+Bari" },
+            { id: 177, name: "ভাতের ভিটা ঢিবি", division: "খুলনা", district: "মাগুরা", lat: 23.5300, lng: 89.4700, type: "প্রত্নতাত্ত্বিক স্থান", wikiId: "BD-D-37-77", image: "https://placehold.co/400x300/e2e8f0/475569?text=Bhater+Vita" },
+            { id: 178, name: "শিলাইদহ রবীন্দ্র কুঠিবাড়ি", division: "খুলনা", district: "কুষ্টিয়া", lat: 23.8900, lng: 89.1000, type: "প্রাসাদ/বাড়ি", wikiId: "BD-D-30-78", image: "https://placehold.co/400x300/e2e8f0/475569?text=Shilaidaha" },
+            { id: 179, name: "ঝাউদিয়া শাহী মসজিদ", division: "খুলনা", district: "কুষ্টিয়া", lat: 23.9000, lng: 89.1100, type: "মসজিদ", wikiId: "BD-D-30-79", image: "https://placehold.co/400x300/e2e8f0/475569?text=Jhaudia+Shahi" },
+            { id: 180, name: "আমঝুপি নীলকুঠি", division: "খুলনা", district: "মেহেরপুর", lat: 23.7600, lng: 88.6300, type: "প্রাসাদ/ভবন", wikiId: "BD-D-39-80", image: "https://placehold.co/400x300/e2e8f0/475569?text=Amjupi+Nilkuthi" },
+            { id: 181, name: "ভাটপাড়া নীলকুঠি", division: "খুলনা", district: "মেহেরপুর", lat: 23.7700, lng: 88.6400, type: "প্রাসাদ/ভবন", wikiId: "BD-D-39-81", image: "https://placehold.co/400x300/e2e8f0/475569?text=Bhatpara" },
+            { id: 182, name: "খান জাহান আলী সেতু", division: "খুলনা", district: "খুলনা", lat: 22.8700, lng: 89.5500, type: "অন্যান্য", wikiId: "BD-D-27-82", image: "https://placehold.co/400x300/e2e8f0/475569?text=Bridge" },
+            { id: 183, name: "বীরশ্রেষ্ঠ রুহুল আমিনের সমাধি", division: "খুলনা", district: "খুলনা", lat: 22.8800, lng: 89.5600, type: "মাজার/সমাধি", wikiId: "BD-D-27-83", image: "https://placehold.co/400x300/e2e8f0/475569?text=Ruhul+Amin+Cemetery" },
+            { id: 184, name: "মুজিবনগর মুক্তিযুদ্ধ স্মৃতি কমপ্লেক্স", division: "খুলনা", district: "মেহেরপুর", lat: 23.7800, lng: 88.6500, type: "ভবন/কমপ্লেক্স", wikiId: "BD-D-39-84", image: "https://placehold.co/400x300/e2e8f0/475569?text=Mujibnagar+Complex" },
+            { id: 185, name: "মুজিবনগর স্মৃতিসৌধ", division: "খুলনা", district: "মেহেরপুর", lat: 23.7900, lng: 88.6600, type: "স্মৃতিস্তম্ভ", wikiId: "BD-D-39-85", image: "https://placehold.co/400x300/e2e8f0/475569?text=Mujibnagar+Monument" },
+            { id: 186, name: "সাহারাবাটি নীলকুঠি", division: "খুলনা", district: "মেহেরপুর", lat: 23.8000, lng: 88.6700, type: "প্রাসাদ/ভবন", wikiId: "BD-D-39-86", image: "https://placehold.co/400x300/e2e8f0/475569?text=Saharabati" },
+            { id: 187, name: "রুপ সনাতন ধাম", division: "খুলনা", district: "যশোর", lat: 23.2800, lng: 89.3200, type: "মন্দির/ধাম", wikiId: "BD-D-22-87", image: "https://placehold.co/400x300/e2e8f0/475569?text=Rup+Sanatan" },
+            { id: 188, name: "বীরশ্রেষ্ঠ নূর মোহাম্মদ শেখের সমাধি", division: "খুলনা", district: "যশোর", lat: 23.2900, lng: 89.3300, type: "মাজার/সমাধি", wikiId: "BD-D-22-88", image: "https://placehold.co/400x300/e2e8f0/475569?text=Nur+Mohammad" },
+            { id: 189, name: "চাঁচড়া রাজবাড়ি", division: "খুলনা", district: "যশোর", lat: 23.3000, lng: 89.3400, type: "প্রাসাদ/বাড়ি", wikiId: "BD-D-22-89", image: "https://placehold.co/400x300/e2e8f0/475569?text=Chanchra+Raj+Bari" },
+            { id: 190, name: "কালেক্টরেট ভবন, যশোর", division: "খুলনা", district: "যশোর", lat: 23.3100, lng: 89.3500, type: "ভবন/কমপ্লেক্স", wikiId: "BD-D-22-90", image: "https://placehold.co/400x300/e2e8f0/475569?text=Collectorate" },
+            { id: 191, name: "যশোর বিমানবন্দর", division: "খুলনা", district: "যশোর", lat: 23.3200, lng: 89.3600, type: "অন্যান্য", wikiId: "BD-D-22-91", image: "https://placehold.co/400x300/e2e8f0/475569?text=Airport" },
+            { id: 192, name: "নলতা শরীফ", division: "খুলনা", district: "সাতক্ষীরা", lat: 22.4600, lng: 89.2600, type: "মাজার/সমাধি", wikiId: "BD-D-58-92", image: "https://placehold.co/400x300/e2e8f0/475569?text=Nalta+Sharif" },
+            { id: 193, name: "দেবহাটা জমিদার বাড়ি", division: "খুলনা", district: "সাতক্ষীরা", lat: 22.4700, lng: 89.2700, type: "প্রাসাদ/বাড়ি", wikiId: "BD-D-58-94", image: "https://placehold.co/400x300/e2e8f0/475569?text=Debhata+Zamindar" },
+            { id: 194, name: "কেরু এ্যান্ড কোম্পানি বাংলাদেশ", division: "খুলনা", district: "চুয়াডাঙ্গা", lat: 23.6400, lng: 88.8500, type: "ভবন/কমপ্লেক্স", wikiId: "BD-D-12-95", image: "https://placehold.co/400x300/e2e8f0/475569?text=Carew+Company" },
+            { id: 195, name: "ঠাকুরপুর জামে মসজিদ", division: "খুলনা", district: "চুয়াডাঙ্গা", lat: 23.6500, lng: 88.8600, type: "মসজিদ", wikiId: "BD-D-12-96", image: "https://placehold.co/400x300/e2e8f0/475569?text=Thakurpur+Mosque" },
+            { id: 196, name: "ঘোলদাড়ি মসজিদ", division: "খুলনা", district: "চুয়াডাঙ্গা", lat: 23.6600, lng: 88.8700, type: "মসজিদ", wikiId: "BD-D-12-97", image: "https://placehold.co/400x300/e2e8f0/475569?text=Ghuldari+Mosque" },
+            { id: 197, name: "জামজামি মসজিদ", division: "খুলনা", district: "চুয়াডাঙ্গা", lat: 23.6700, lng: 88.8800, type: "মসজিদ", wikiId: "BD-D-12-98", image: "https://placehold.co/400x300/e2e8f0/475569?text=Jamjami+Mosque" },
+            { id: 198, name: "তিওরবিলা মসজিদ", division: "খুলনা", district: "চুয়াডাঙ্গা", lat: 23.6800, lng: 88.8900, type: "মসজিদ", wikiId: "BD-D-12-99", image: "https://placehold.co/400x300/e2e8f0/475569?text=Teorbila+Mosque" },
+            { id: 199, name: "স্বাধীন বাংলাদেশের প্রথম ডাকঘর", division: "খুলনা", district: "চুয়াডাঙ্গা", lat: 23.6900, lng: 88.9000, type: "অন্যান্য", wikiId: "BD-D-12-100", image: "https://placehold.co/400x300/e2e8f0/475569?text=First+Post+Office" },
+            { id: 200, name: "লালনের আখড়া", division: "খুলনা", district: "কুষ্টিয়া", lat: 23.9100, lng: 89.1200, type: "মাজার/সমাধি", wikiId: "BD-D-30-102", image: "https://placehold.co/400x300/e2e8f0/475569?text=Lalon+Akhra" },
+            { id: 201, name: "শ্রীপুর জমিদার বাড়ি", division: "খুলনা", district: "মাগুরা", lat: 23.5400, lng: 89.4800, type: "প্রাসাদ/বাড়ি", wikiId: "BD-D-37-103", image: "https://placehold.co/400x300/e2e8f0/475569?text=Sreepur+Zamindar" },
+            { id: 202, name: "সিদ্ধেশ্বরী মঠ", division: "খুলনা", district: "মাগুরা", lat: 23.5500, lng: 89.4900, type: "মন্দির", wikiId: "BD-D-37-104", image: "https://placehold.co/400x300/e2e8f0/475569?text=Siddheshwari+Moth" },
+            { id: 203, name: "জিন্দা পীর মসজিদ", division: "খুলনা", district: "বাগেরহাট", lat: 22.8300, lng: 89.9000, type: "মসজিদ", wikiId: "BD-D-05-105", image: "https://placehold.co/400x300/e2e8f0/475569?text=Zinda+Pir+Mosque" },
+            { id: 204, name: "বাগেরহাট জাদুঘর", division: "খুলনা", district: "বাগেরহাট", lat: 22.8400, lng: 89.9100, type: "জাদুঘর", wikiId: "BD-D-05-106", image: "https://placehold.co/400x300/e2e8f0/475569?text=Bagerhat+Museum" },
+            { id: 205, name: "শৈলকুপা শাহী মসজিদ", division: "খুলনা", district: "ঝিনাইদহ", lat: 23.7400, lng: 89.3700, type: "মসজিদ", wikiId: "BD-D-23-107", image: "https://placehold.co/400x300/e2e8f0/475569?text=Shailkupa+Shahi" },
+            { id: 206, name: "সিরাজ সাঁইয়ের সমাধি", division: "খুলনা", district: "ঝিনাইদহ", lat: 23.7500, lng: 89.3800, type: "মাজার/সমাধি", wikiId: "BD-D-23-108", image: "https://placehold.co/400x300/e2e8f0/475569?text=Siraj+Sai" },
+            { id: 207, name: "নলডাঙ্গা মন্দির", division: "খুলনা", district: "ঝিনাইদহ", lat: 23.7600, lng: 89.3900, type: "মন্দির", wikiId: "BD-D-23-109", image: "https://placehold.co/400x300/e2e8f0/475569?text=Naldanga+Temple" },
+            { id: 208, name: "মিয়ার দালান জমিদার বাড়ি", division: "খুলনা", district: "ঝিনাইদহ", lat: 23.7700, lng: 89.4000, type: "প্রাসাদ/বাড়ি", wikiId: "BD-D-23-110", image: "https://placehold.co/400x300/e2e8f0/475569?text=Miar+Dalan" }
         ];
 
-        // Mapping of Divisions to their respective Districts for the dropdown
+        // Mapping of Divisions to their respective Districts in Bengali
         const districtMap = {
-            "Dhaka": ["Dhaka", "Faridpur", "Gazipur", "Gopalganj", "Kishoreganj", "Madaripur", "Manikganj", "Munshiganj", "Narayanganj", "Narsingdi", "Rajbari", "Shariatpur", "Tangail", "Savar"],
-            "Chattogram": ["Bandarban", "Brahmanbaria", "Chandpur", "Chattogram", "Cumilla", "Cox's Bazar", "Feni", "Khagrachhari", "Lakshmipur", "Noakhali", "Rangamati"],
-            "Rajshahi": ["Bogura", "Chapainawabganj", "Joypurhat", "Naogaon", "Natore", "Pabna", "Rajshahi", "Sirajganj", "Bogra"],
-            "Khulna": ["Bagerhat", "Chuadanga", "Jashore", "Jhenaidah", "Khulna", "Kushtia", "Magura", "Meherpur", "Narail", "Satkhira"],
-            "Sylhet": ["Habiganj", "Moulvibazar", "Sunamganj", "Sylhet"],
-            "Barishal": ["Barguna", "Barishal", "Bhola", "Jhalokati", "Patuakhali", "Pirojpur"],
-            "Rangpur": ["Dinajpur", "Gaibandha", "Kurigram", "Lalmonirhat", "Nilphamari", "Panchagarh", "Rangpur", "Thakurgaon"],
-            "Mymensingh": ["Jamalpur", "Mymensingh", "Netrokona", "Sherpur"]
+            "ঢাকা": ["ঢাকা", "ফরিদপুর", "গাজীপুর", "গোপালগঞ্জ", "কিশোরগঞ্জ", "মাদারীপুর", "মানিকগঞ্জ", "মুন্সীগঞ্জ", "নারায়ণগঞ্জ", "নরসিংদী", "রাজবাড়ী", "শরীয়তপুর", "টাঙ্গাইল", "সাভার"],
+            "চট্টগ্রাম": ["বান্দরবান", "ব্রাহ্মণবাড়িয়া", "চাঁদপুর", "চট্টগ্রাম", "কুমিল্লা", "কক্সবাজার", "ফেনী", "খাগড়াছড়ি", "লক্ষ্মীপুর", "নোয়াখালী", "রাঙ্গামাটি"],
+            "রাজশাহী": ["বগুড়া", "চাঁপাইনবাবগঞ্জ", "জয়পুরহাট", "নওগাঁ", "নাটোর", "পাবনা", "রাজশাহী", "সিরাজগঞ্জ"],
+            "খুলনা": ["বাগেরহাট", "চুয়াডাঙ্গা", "যশোর", "ঝিনাইদহ", "খুলনা", "কুষ্টিয়া", "মাগুরা", "মেহেরপুর", "নড়াইল", "সাতক্ষীরা"],
+            "সিলেট": ["হবিগঞ্জ", "মৌলভীবাজার", "সুনামগঞ্জ", "সিলেট"],
+            "বরিশাল": ["বরগুনা", "বরিশাল", "ভোলা", "ঝালকাঠি", "পটুয়াখালী", "পিরোজপুর"],
+            "রংপুর": ["দিনাজপুর", "গাইবান্ধা", "কুড়িগ্রাম", "লালমনিরহাট", "নীলফামারী", "পঞ্চগড়", "রংপুর", "ঠাকুরগাঁও"],
+            "ময়মনসিংহ": ["জামালপুর", "ময়মনসিংহ", "নেত্রকোনা", "শেরপুর"]
         };
 
         let map;
         let markers = [];
         let currentDivisionFilter = 'all';
         let currentDistrictFilter = 'all';
+        let currentTypeFilter = 'all';
 
         function initMap() {
             // Center map on Bangladesh
@@ -203,9 +344,43 @@
             // Hide loading overlay
             document.getElementById('loading-overlay').style.display = 'none';
 
+            // Populate category dropdown dynamically
+            const types = [...new Set(monumentsData.map(m => m.type))].sort();
+            const typeSelect = document.getElementById('type-filter');
+            types.forEach(type => {
+                const option = document.createElement('option');
+                option.value = type;
+                option.textContent = type;
+                typeSelect.appendChild(option);
+            });
+
             // Set up event listeners
             document.getElementById('division-filter').addEventListener('change', handleDivisionChange);
             document.getElementById('district-filter').addEventListener('change', handleDistrictChange);
+            document.getElementById('type-filter').addEventListener('change', handleTypeChange);
+        }
+
+        // Helper function to focus map on a marker with an offset so it stays centered
+        function focusOnLocationWithOffset(lat, lng, marker, zoomLevel = 14) {
+            // Close any currently open popups to prevent autoPan conflicts
+            map.closePopup();
+            
+            // Calculate pixel offset
+            const targetPoint = map.project([lat, lng], zoomLevel);
+            targetPoint.y -= 150; // Offset Y by 150 pixels to account for popup height
+            
+            // Convert back to lat/lng
+            const targetLatLng = map.unproject(targetPoint, zoomLevel);
+            
+            map.flyTo(targetLatLng, zoomLevel, {
+                duration: 1.0
+            });
+            
+            if (marker) {
+                map.once('moveend', () => {
+                    marker.openPopup();
+                });
+            }
         }
 
         function getIconConfigForType(type) {
@@ -213,28 +388,37 @@
             let bgClass = 'marker-default';
 
             const lowerType = type.toLowerCase();
-            if (lowerType.includes('mosque')) {
+            if (lowerType.includes('মসজিদ') || lowerType.includes('ইমামবাড়া')) {
                 iconClass = 'fa-mosque';
                 bgClass = 'marker-mosque';
-            } else if (lowerType.includes('temple')) {
-                iconClass = 'fa-vihara'; // closest to generic temple/pagoda
+            } else if (lowerType.includes('মন্দির') || lowerType.includes('মঠ') || lowerType.includes('ধাম')) {
+                iconClass = 'fa-vihara'; 
                 bgClass = 'marker-temple';
-            } else if (lowerType.includes('palace')) {
+            } else if (lowerType.includes('প্রাসাদ') || lowerType.includes('বাড়ি') || lowerType.includes('ভবন') || lowerType.includes('কমপ্লেক্স')) {
                 iconClass = 'fa-chess-rook';
                 bgClass = 'marker-palace';
-            } else if (lowerType.includes('archaeological')) {
+            } else if (lowerType.includes('প্রত্নতাত্ত্বিক') || lowerType.includes('ঢিবি') || lowerType.includes('হাম্মামখানা')) {
                 iconClass = 'fa-landmark';
                 bgClass = 'marker-archaeological';
-            } else if (lowerType.includes('fort')) {
+            } else if (lowerType.includes('দুর্গ')) {
                 iconClass = 'fa-chess-rook';
                 bgClass = 'marker-fort';
+            } else if (lowerType.includes('জাদুঘর') || lowerType.includes('সংগ্রহশালা')) {
+                iconClass = 'fa-building-columns';
+                bgClass = 'marker-museum';
+            } else if (lowerType.includes('সমাধি') || lowerType.includes('মাজার') || lowerType.includes('দরগাহ') || lowerType.includes('আখড়া')) {
+                iconClass = 'fa-place-of-worship'; 
+                bgClass = 'marker-tomb';
+            } else if (lowerType.includes('গির্জা')) {
+                iconClass = 'fa-church';
+                bgClass = 'marker-default'; 
             }
 
             return {
                 html: `<div class="custom-marker-icon ${bgClass}" style="width: 30px; height: 30px;">
                         <i class="fa-solid ${iconClass}"></i>
                        </div>`,
-                className: '', // Clear default class
+                className: '', 
                 iconSize: [30, 30],
                 iconAnchor: [15, 15],
                 popupAnchor: [0, -15]
@@ -247,46 +431,40 @@
             markers = [];
 
             data.forEach(monument => {
-                // Create custom icon
                 const customIcon = L.divIcon(getIconConfigForType(monument.type));
-
                 const marker = L.marker([monument.lat, monument.lng], { icon: customIcon }).addTo(map);
                 
-                // Construct popup content
                 const popupContent = `
                     <div class="max-w-[250px]">
                         <img src="${monument.image}" alt="${monument.name}" class="w-full h-32 object-cover rounded-md mb-3 border border-slate-200">
                         <h3 class="font-bold text-lg text-slate-900 mb-1 leading-tight">${monument.name}</h3>
                         <div class="text-sm text-slate-600 mb-2">
-                            <p><span class="font-semibold">Type:</span> 
+                            <p><span class="font-semibold">ধরন:</span> 
                                 <span class="inline-flex items-center gap-1">
                                     ${getIconConfigForType(monument.type).html.replace('style="width: 30px; height: 30px;"', 'style="width: 16px; height: 16px; font-size: 8px; display: inline-flex;"')}
                                     ${monument.type}
                                 </span>
                             </p>
-                            <p><span class="font-semibold">Location:</span> ${monument.district}, ${monument.division}</p>
-                            <p><span class="font-semibold">ID:</span> <code class="bg-slate-100 px-1 py-0.5 rounded text-xs">${monument.wikiId}</code></p>
+                            <p><span class="font-semibold">অবস্থান:</span> ${monument.district}, ${monument.division}</p>
+                            <p><span class="font-semibold">আইডি:</span> <code class="bg-slate-100 px-1 py-0.5 rounded text-xs">${monument.wikiId}</code></p>
                         </div>
-                        <a href="#" class="inline-block w-full text-center px-3 py-2 bg-blue-50 text-blue-700 hover:bg-blue-100 hover:text-blue-800 rounded text-sm font-medium transition-colors border border-blue-200">Upload Photo for this ID</a>
+                        <a href="#" class="inline-block w-full text-center px-3 py-2 bg-blue-50 text-blue-700 hover:bg-blue-100 hover:text-blue-800 rounded text-sm font-medium transition-colors border border-blue-200">এই আইডির জন্য ছবি আপলোড করুন</a>
                     </div>
                 `;
                 
                 marker.bindPopup(popupContent, {
                     maxWidth: 260,
-                    className: 'custom-popup'
+                    className: 'custom-popup',
+                    autoPan: false
                 });
                 
-                // Add click event to marker to pan to it
                 marker.on('click', () => {
-                    map.flyTo([monument.lat, monument.lng], 12, {
-                        duration: 1.5
-                    });
+                    focusOnLocationWithOffset(monument.lat, monument.lng, marker);
                 });
 
                 markers.push(marker);
             });
             
-            // Adjust bounds if we have markers
             if(markers.length > 0) {
                  const group = new L.featureGroup(markers);
                  map.fitBounds(group.getBounds(), {padding: [30, 30]});
@@ -295,7 +473,12 @@
 
         function renderList(data) {
             const listContainer = document.getElementById('monument-list');
+            const countContainer = document.getElementById('result-count');
+            
             listContainer.innerHTML = '';
+            
+            // Update the total count dynamically
+            countContainer.textContent = `মোট স্থাপনা: ${data.length}`;
 
             if (data.length === 0) {
                 listContainer.innerHTML = `
@@ -304,7 +487,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z" />
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
-                        <p>No monuments found matching filters.</p>
+                        <p>ফিল্টারের সাথে মিলে এমন কোনো স্থাপনা পাওয়া যায়নি।</p>
                     </div>`;
                 return;
             }
@@ -313,7 +496,6 @@
                 const item = document.createElement('div');
                 item.className = 'p-3 mb-2 bg-white rounded-md shadow-sm cursor-pointer transition-all border border-slate-100 hover:border-blue-300 hover:shadow-md group';
                 
-                // Get icon for list
                 const iconConfig = getIconConfigForType(monument.type);
                 const smallIconHtml = iconConfig.html.replace('style="width: 30px; height: 30px;"', 'style="width: 24px; height: 24px; font-size: 12px; flex-shrink: 0;"');
 
@@ -330,13 +512,8 @@
                     </div>
                 `;
                 
-                // Fly to marker and open popup when list item is clicked
                 item.addEventListener('click', () => {
-                    map.flyTo([monument.lat, monument.lng], 13, {
-                        duration: 1.5
-                    });
-                    // Open the corresponding marker's popup
-                    markers[index].openPopup();
+                    focusOnLocationWithOffset(monument.lat, monument.lng, markers[index]);
                 });
 
                 listContainer.appendChild(item);
@@ -345,18 +522,17 @@
 
         function updateDistrictDropdown(division) {
             const districtSelect = document.getElementById('district-filter');
-            districtSelect.innerHTML = ''; // Clear current options
+            districtSelect.innerHTML = ''; 
 
             if (division === 'all') {
-                districtSelect.innerHTML = '<option value="all">Select a Division first</option>';
+                districtSelect.innerHTML = '<option value="all">প্রথমে একটি বিভাগ নির্বাচন করুন</option>';
                 districtSelect.disabled = true;
                 currentDistrictFilter = 'all';
             } else {
                 districtSelect.disabled = false;
-                districtSelect.innerHTML = '<option value="all">All Districts</option>';
+                districtSelect.innerHTML = '<option value="all">সকল জেলা</option>';
                 
                 const districts = districtMap[division] || [];
-                // Sort districts alphabetically
                 districts.sort().forEach(dist => {
                     const option = document.createElement('option');
                     option.value = dist;
@@ -376,6 +552,10 @@
             if (currentDistrictFilter !== 'all') {
                 filteredData = filteredData.filter(m => m.district === currentDistrictFilter);
             }
+
+            if (currentTypeFilter !== 'all') {
+                filteredData = filteredData.filter(m => m.type === currentTypeFilter);
+            }
             
             renderMarkers(filteredData);
             renderList(filteredData);
@@ -394,10 +574,19 @@
             filterData();
         }
 
+        function handleTypeChange(e) {
+            currentTypeFilter = e.target.value;
+            filterData();
+        }
+
         function zoomToFullMap() {
             // Reset filters
             document.getElementById('division-filter').value = 'all';
+            document.getElementById('district-filter').value = 'all';
+            document.getElementById('type-filter').value = 'all';
             currentDivisionFilter = 'all';
+            currentDistrictFilter = 'all';
+            currentTypeFilter = 'all';
             
             updateDistrictDropdown('all');
             filterData();
